@@ -1,0 +1,14 @@
+{
+  "name": "abc",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "plural": "abc",
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {},
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
