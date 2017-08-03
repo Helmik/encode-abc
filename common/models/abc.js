@@ -3,12 +3,6 @@
 const jwt = require('jwt-simple');
 
 module.exports = function(Abc) {
-
-    Abc.observe('**', function(ctx, next) {
-        console.log(ctx);
-        next();
-      });
-
     Abc.request = (encoded, decoded, process, next) => {
         console.log(encoded + '\t' + decoded + '\t' + process)
         next(null, {ok: 'ok'});
