@@ -3,6 +3,12 @@
 const jwt = require('jwt-simple');
 
 module.exports = function(Abc) {
+
+    Abc.observe('**', function(ctx, next) {
+        console.log(ctx);
+        next();
+      });
+
     Abc.request = (encoded, decoded, process, next) => {
         console.log(encoded + '\t' + decoded + '\t' + process)
         next(null, {ok: 'ok'});
@@ -11,7 +17,17 @@ module.exports = function(Abc) {
     Abc.ctl = (encoded, next) => {
         let t1 = +new Date();
         let decoded = jwt.decode(encoded, '04a2b60171b94a2e0c40c0e2ac557f5c1605cef8413ebb2cb0b225b5e5036bb5ed42c5410cd5b5b13d47006996a7bdf455281ddb8870bde948a38c6feee33052c4');
-        next(null, {decoded, time: (+new Date() - t1)});
+        next(null, {
+            Status: "Ok", //values: "Ok" or "Failed"
+            Version: decoded.v, //comes from the request
+            Domain: decoded.d, //comes from the request
+            Guid: decoded.g, //comes from the request
+            Url: decoded.u, //comes from the request
+            UserAgent: "Mozilla/5.0 (Android 4.4; Mobile; rv:41.0) Gecko/41.0 Firefox/41.0", //comes from backend
+            IpAddress : "201.123.78.23", //comes from backend
+            AdCount: decoded.ez.length, //comes from the request
+            PropertyGuid: decoded.pg //comes from the request
+        });
     };
 
     Abc.blf = next => {
